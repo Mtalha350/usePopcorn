@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import StarRating from './StarRating';
 import { useMovies } from './useMovies';
 import { useLocalStorageState } from './useLocalStorageState';
@@ -21,9 +21,9 @@ export default function App() {
     setSelectedId((selectedId) => (id === selectedId ? null : id));
   }
 
-  function handleCloseMovie() {
+  const handleCloseMovie = useCallback(() => {
     setSelectedId(null);
-  }
+  }, []);
 
   function handleAddWatched(movie) {
     setWatched((watched) => [...watched, movie]);
@@ -112,9 +112,9 @@ function Search({ query, setQuery }) {
 
   useKey('Enter', function () {
     if (document.activeElement === inputEl.current) return;
-     inputEl.current.focus();
-     setQuery('');
-  })
+    inputEl.current.focus();
+    setQuery('');
+  });
 
   useEffect(
     function () {
